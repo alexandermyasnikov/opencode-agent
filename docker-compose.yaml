@@ -1,0 +1,47 @@
+services:
+  opencode:
+    build:
+      context: ./opencode
+    ports:
+      - "127.0.0.1:49374:49374"
+    env_file:
+      - ~/.config/opencode/.env
+    restart: unless-stopped
+    depends_on:
+      - docker-dind
+    environment:
+      OPENCODE_SERVER_PASSWORD: ${OPENCODE_SERVER_PASSWORD}
+      DOCKER_HOST: tcp://docker-dind:2375
+    volumes:
+      - ${HOME}/.config/opencode:/root/.config/opencode
+      - ${HOME}/.local/share/opencode:/root/.local/share/opencode
+      - ${HOME}/.cache/opencode:/root/.cache/opencode
+      - ${HOME}/.config/opencode/gitconfig:/root/.gitconfig:ro
+
+      - ${HOME}/data/code:/data/code
+      - ${HOME}/Downloads:/root/Downloads
+    command:
+      - /root/.opencode/bin/opencode
+      - serve
+      - --hostname=0.0.0.0
+      - --port=49374
+      - --log-level=warn
+      - --print-logs=true
+    networks:
+      - opencode
+
+  docker-dind:
+    image: docker:29-dind
+    restart: unless-stopped
+    privileged: true
+    command: ["dockerd", "--host=tcp://0.0.0.0:2375", "--tls=false"]
+    networks:
+      - opencode
+    volumes:
+      - docker-data:/var/lib/docker
+
+networks:
+  opencode:
+
+volumes:
+  docker-data:
