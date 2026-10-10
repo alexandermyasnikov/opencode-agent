@@ -19,9 +19,12 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     golang-go \
  && rm -rf /var/lib/apt/lists/*
 
+ENV GOTOOLCHAIN=local
 ENV PATH="/root/go/bin:${PATH}"
-RUN go install golang.org/x/tools/gopls@latest \
- && go install github.com/go-task/task/v3/cmd/task@latest
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    go install golang.org/x/tools/gopls@latest \
+ && go install github.com/go-task/task/v3/cmd/task@v3.52.0
 
 RUN curl -fsSL https://opencode.ai/v2/install | bash
 RUN curl -fsSL https://astral.sh/uv/install.sh | sh
