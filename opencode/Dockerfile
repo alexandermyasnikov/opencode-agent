@@ -1,6 +1,8 @@
 FROM ubuntu:26.04
 
-RUN apt-get update && apt-get install --yes --no-install-recommends \
+RUN apt-get update \
+ && apt-get install --yes --no-install-recommends \
+    build-essential \
     ca-certificates \
     curl \
     jq \
@@ -8,7 +10,6 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     dnsutils \
     ncat \
     gdb \
-    build-essential \
     openssh-client \
     python3 \
     python3-pip \
@@ -16,6 +17,8 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     fd-find \
     ripgrep \
     docker.io \
+    nodejs \
+    npm \
  && rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/local/go/bin:/root/go/bin:/root/.local/bin:${PATH}"
@@ -25,7 +28,8 @@ RUN curl -fsSL "https://go.dev/dl/$(curl -fsSL https://go.dev/VERSION?m=text | h
 RUN --mount=type=cache,target=/root/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     go install golang.org/x/tools/gopls@latest \
- && go install github.com/go-task/task/v3/cmd/task@latest
+ && go install github.com/go-task/task/v3/cmd/task@latest \
+ && go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
 
 RUN curl -fsSL https://opencode.ai/v2/install | bash
 
