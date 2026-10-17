@@ -18,6 +18,11 @@ services:
       - ${HOME}/.cache/opencode:/root/.cache/opencode
       - ${HOME}/.config/opencode/gitconfig:/root/.gitconfig:ro
 
+      - ${HOME}/.local/share/serena:/root/.serena
+      - ${HOME}/.local/share/opencode-mem:/root/.opencode-mem/data
+      - ${HOME}/.cache/codebase-memory-mcp:/root/.cache/codebase-memory-mcp
+      - ${HOME}/.config/ssh-mcp/config.toml:/root/.config/ssh-mcp/config.toml:ro
+
       - ${HOME}/data/code:/data/code
       - ${HOME}/Downloads:/root/Downloads
     command:

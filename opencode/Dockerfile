@@ -1,30 +1,32 @@
-FROM ubuntu:26.04
+FROM ubuntu:26.10
 
-RUN apt-get update \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    rm -f /etc/apt/apt.conf.d/docker-clean \
+ && apt-get update \
  && apt-get install --yes --no-install-recommends \
     build-essential \
     ca-certificates \
     curl \
-    jq \
-    git \
     dnsutils \
-    ncat \
+    docker.io \
+    fd-find \
     gdb \
+    git \
+    golang \
+    jq \
+    ncat \
+    nodejs \
+    npm \
     openssh-client \
     python3 \
     python3-pip \
     python3-venv \
-    fd-find \
     ripgrep \
-    docker.io \
-    nodejs \
-    npm \
- && rm -rf /var/lib/apt/lists/*
+    tzdata
 
-ENV PATH="/usr/local/go/bin:/root/go/bin:/root/.local/bin:${PATH}"
+ENV PATH="/root/go/bin:/root/.local/bin:${PATH}"
 
-RUN curl -fsSL "https://go.dev/dl/$(curl -fsSL https://go.dev/VERSION?m=text | head -n1).linux-$(dpkg --print-architecture).tar.gz" \
-    | tar -C /usr/local -xz
 RUN --mount=type=cache,target=/root/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     go install golang.org/x/tools/gopls@latest \
@@ -35,5 +37,14 @@ RUN curl -fsSL https://opencode.ai/v2/install | bash
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     curl -fsSL https://astral.sh/uv/install.sh | sh \
- && uv tool install git+https://github.com/oraios/serena \
- && uv tool install mcp-sequential-thinking
+ && uv tool install git+https://github.com/oraios/serena
+
+RUN --mount=type=cache,target=/root/.npm \
+    npm install -g ssh-mcp \
+ && mkdir -p /root/.config/ssh-mcp \
+ && chmod 700 /root/.config/ssh-mcp
+
+RUN curl -fsSL "https://github.com/github/github-mcp-server/releases/download/v2.0.2/github-mcp-server_Linux_$(dpkg --print-architecture | sed s/amd64/x86_64/).tar.gz" \
+  | tar -xz -C /root/.local/bin github-mcp-server
+RUN curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh \
+  | bash -s -- --skip-config --dir=/usr/local/bin
