@@ -16,7 +16,8 @@ services:
       - ${HOME}/.config/opencode:/root/.config/opencode
       - ${HOME}/.local/share/opencode:/root/.local/share/opencode
       - ${HOME}/.cache/opencode:/root/.cache/opencode
-      - ${HOME}/.config/opencode/gitconfig:/root/.gitconfig:ro
+      - ${HOME}/.config/opencode/gitconfig:/root/.gitconfig
+      - ${HOME}/.config/opencode/gitignore:/root/.gitignore
 
       - ${HOME}/.local/share/serena:/root/.serena
       - ${HOME}/.local/share/opencode-mem:/root/.opencode-mem/data
