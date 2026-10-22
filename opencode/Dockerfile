@@ -55,5 +55,6 @@ RUN --mount=type=cache,target=/root/.npm \
 
 RUN curl -fsSL "https://github.com/github/github-mcp-server/releases/download/v2.0.2/github-mcp-server_Linux_$(dpkg --print-architecture | sed s/amd64/x86_64/).tar.gz" \
 	| tar -xz -C /root/.local/bin github-mcp-server
-RUN curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh \
-	| bash -s -- --skip-config --dir=/usr/local/bin
+
+RUN curl -fsSL https://github.com/DeusData/codebase-memory-mcp/releases/latest/download/codebase-memory-mcp-linux-arm64-portable.tar.gz \
+	| tar -xz -C /usr/local/bin codebase-memory-mcp
