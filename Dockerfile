@@ -27,10 +27,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 		tzdata \
 		unzip
 
-COPY ./.data/cert/* /usr/local/share/ca-certificates/
-RUN update-ca-certificates
-
 ENV PATH="/root/go/bin:/root/.local/bin:${PATH}"
+
+COPY ./data/certs/ /usr/local/share/ca-certificates/
+RUN update-ca-certificates
 
 RUN ln -s /usr/bin/bsdtar /usr/bin/tar -f   # fix tar: Cannot open: Function not implemented
 
@@ -53,8 +53,8 @@ RUN --mount=type=cache,target=/root/.npm \
 	&& mkdir -p /root/.config/ssh-mcp \
 	&& chmod 700 /root/.config/ssh-mcp
 
-RUN curl -fsSL "https://github.com/github/github-mcp-server/releases/download/v2.0.2/github-mcp-server_Linux_$(dpkg --print-architecture | sed s/amd64/x86_64/).tar.gz" \
+RUN curl -fsSL "https://github.com/github/github-mcp-server/releases/latest/download/github-mcp-server_Linux_x86_64.tar.gz" \
 	| tar -xz -C /root/.local/bin github-mcp-server
 
-RUN curl -fsSL https://github.com/DeusData/codebase-memory-mcp/releases/latest/download/codebase-memory-mcp-linux-arm64-portable.tar.gz \
+RUN curl -fsSL "https://github.com/DeusData/codebase-memory-mcp/releases/latest/download/codebase-memory-mcp-linux-arm64-portable.tar.gz" \
 	| tar -xz -C /usr/local/bin codebase-memory-mcp

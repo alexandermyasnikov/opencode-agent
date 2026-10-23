@@ -1,0 +1,17 @@
+# SSH MCP Server Configuration
+# Copy to config.toml and fill in your private values
+# DO NOT COMMIT config.toml (contains secrets)
+
+# [defaults]
+# defaultProfile = "dev"
+# approvalMode = "ask-destructive"
+
+# [[profiles]]
+# name = "dev"
+# host = "192.168.1.100"
+# port = 22
+# user = "deployd"
+# auth = "key"
+# keyRef = "~/.ssh/id_ed25519"
+# role = "admin"
+# approvalPolicy = "auto"

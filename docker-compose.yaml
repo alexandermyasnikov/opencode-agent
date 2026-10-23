@@ -1,7 +1,7 @@
 services:
   opencode:
     build:
-      context: ./opencode
+      context: .
     ports:
       - "127.0.0.1:49374:49374"
     env_file:
@@ -13,19 +13,18 @@ services:
       OPENCODE_SERVER_PASSWORD: ${OPENCODE_SERVER_PASSWORD}
       DOCKER_HOST: tcp://docker-dind:2375
     volumes:
-      - ${HOME}/.config/opencode:/root/.config/opencode
-      - ${HOME}/.local/share/opencode:/root/.local/share/opencode
-      - ${HOME}/.cache/opencode:/root/.cache/opencode
-      - ${HOME}/.config/opencode/gitconfig:/root/.gitconfig
-      - ${HOME}/.config/opencode/gitignore:/root/.gitignore
+      - ./root/.config/opencode:/root/.config/opencode
+      - ./root/.config/ssh-mcp:/root/.config/ssh-mcp
+      - ./root/.gitconfig:/root/.gitconfig
+      - ./root/.gitconfig_private:/root/.gitconfig_private
+      - ./root/_gitignore:/root/.gitignore
 
-      - ${HOME}/.local/share/serena:/root/.serena
-      - ${HOME}/.local/share/opencode-mem:/root/.opencode-mem/data
-      - ${HOME}/.cache/codebase-memory-mcp:/root/.cache/codebase-memory-mcp
-      - ${HOME}/.config/ssh-mcp/config.toml:/root/.config/ssh-mcp/config.toml:ro
+      - opencode-data:/root/.local/share/opencode
+      - serena-data:/root/.serena
+      - opencode-mem-data:/root/.opencode-mem/data
 
-      - ${HOME}/data/code:/data/code
-      - ${HOME}/Downloads:/root/Downloads
+      - opencode-cache:/root/.cache/opencode
+      - codebase-memory-cache:/root/.cache/codebase-memory-mcp
     command:
       - /root/.opencode/bin/opencode
       - serve
@@ -51,3 +50,8 @@ networks:
 
 volumes:
   docker-data:
+  opencode-data:
+  serena-data:
+  opencode-mem-data:
+  opencode-cache:
+  codebase-memory-cache:

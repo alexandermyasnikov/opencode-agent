@@ -1,0 +1,143 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "model": "{env:OPENCODE_MODEL}",
+  "update": "notify",
+  "lsp": true,
+  "formatter": true,
+  "experimental": {
+    "todo": true
+  },
+  "plugins": [
+    "opencode-mem@latest",
+    "@dietrichgebert/ponytail",
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "./plugins/rate-limit-retry"
+  ],
+  "agents": {
+    "title": {
+      "model": "{env:OPENCODE_AGENT_TITLE_MODEL}"
+    },
+    "reviewer": {
+      "model": "{env:OPENCODE_AGENT_REVIEWER_MODEL}"
+    },
+    "tester": {
+      "model": "{env:OPENCODE_AGENT_TESTER_MODEL}"
+    }
+  },
+  "providers": {
+    "lmstudio": {
+      "name": "LM Studio (local)",
+      "package": "aisdk:@ai-sdk/openai-compatible",
+      "settings": {
+        "baseURL": "http://host.docker.internal:1234/v1"
+      },
+      "models": {
+        "qwen/qwen3.5-9b": {
+          "name": "Qwen3.5 9B"
+        }
+      }
+    },
+    "openrouter": {
+      "name": "OpenRouter",
+      "settings": {
+        "apiKey": "{env:PROVIDER_OPENROUTER_API_KEY}"
+      }
+    },
+    "dahl": {
+      "name": "dahl",
+      "package": "aisdk:@ai-sdk/openai-compatible",
+      "settings": {
+        "baseURL": "https://inference.dahl.global/v1",
+        "apiKey": "{env:PROVIDER_DAHL_API_KEY}"
+      },
+      "models": {
+        "MiniMaxAI/MiniMax-M2.7": {
+          "name": "MiniMax-M2.7"
+        },
+        "deepseek-ai/DeepSeek-V4-Flash-0731": {
+          "name": "DeepSeek-V4-Flash-0731"
+        }
+      }
+    },
+    "opencode-go": {
+      "options": {
+        "baseURL": "https://opencode.ai/zen/v1"
+      }
+    }
+  },
+  "mcp": {
+    "servers": {
+      "serena": {
+        "type": "local",
+        "command": [
+          "/root/.local/bin/serena",
+          "start-mcp-server",
+          "--project-from-cwd"
+        ]
+      },
+      "codebase-memory": {
+        "type": "local",
+        "command": [
+          "/usr/local/bin/codebase-memory-mcp"
+        ]
+      },
+      "github": {
+        "type": "local",
+        "command": [
+          "/root/.local/bin/github-mcp-server",
+          "stdio"
+        ],
+        "environment": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:MCP_GITHUB_API_KEY}",
+          "GITHUB_TOOLSETS": "repos",
+          "GITHUB_READ_ONLY": "1"
+        }
+      },
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "Authorization": "Bearer {env:MCP_CONTEXT7_API_KEY}"
+        }
+      },
+      "gitlab.com": {
+        "type": "local",
+        "command": [
+          "/root/.local/bin/uvx",
+          "jmrplens-gitlab-mcp-server"
+        ],
+        "environment": {
+          "GITLAB_TOKEN": "{env:MCP_GITLAB_API_KEY}"
+        },
+        "disabled": true
+      },
+      "grafana.net": {
+        "type": "local",
+        "command": [
+          "/root/.local/bin/uvx",
+          "mcp-grafana"
+        ],
+        "environment": {
+          "GRAFANA_URL": "{env:MCP_GRAFANA_URL}",
+          "GRAFANA_SERVICE_ACCOUNT_TOKEN": "{env:MCP_GRAFANA_API_KEY}"
+        },
+        "disabled": true
+      },
+      "ssh-mcp": {
+        "type": "local",
+        "command": [
+          "ssh-mcp"
+        ],
+        "disabled": true
+      },
+      "pdf": {
+        "type": "local",
+        "command": [
+          "/root/.local/bin/uvx", "pdf-mcp"
+        ],
+        "disabled": true
+      }
+    }
+  }
+}
