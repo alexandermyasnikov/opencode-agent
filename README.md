@@ -4,29 +4,9 @@
 
 ## Архитектура
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Host                                                       │
-│  ~/.config/opencode/   ~/.config/ssh-mcp/                   │
-│  ├─ .env               └─ config.toml                       │
-│  ├─ .gitconfig_private                                      │
-│  └─ .gitignore                                              │
-│                                                             │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  opencode (порт 49374)                                 │ │
-│  │  ├─ plugins: ponytail, mem, rate-limit-retry           │ │
-│  │  ├─ agents: title, reviewer, tester                    │ │
-│  │  ├─ mcp: serena, context7, gitlab, grafana, ssh        │ │
-│  │  └─ volumes: opencode-data, serena-data, codebase-mem  │ │
-│  └────────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │ docker-dind (Docker daemon на tcp://docker-dind:2375)  │ │
-│  │   └─ volume: docker-data (/var/lib/docker)             │ │
-│  └────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────┘
-```
+![Architecture](docs/images/architecture.svg)
 
-Хостовый `/var/run/docker.sock` намеренно не монтируется — агент выполняет произвольные команды, доступ к сокету хоста эквивалентен root на хосте.
+> Проект эволюционирует — детали могут отличаться, но принцип тот же.
 
 ## Сервисы
 
