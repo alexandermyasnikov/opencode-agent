@@ -1,5 +1,5 @@
 docker-compose.override.yml
-certs/*
+data/certs/*
 root/.config/opencode/.ponytail-active
 root/.config/opencode/plugins/*/package-lock.json
 root/.config/ssh-mcp/config.toml
