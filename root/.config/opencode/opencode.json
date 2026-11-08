@@ -31,11 +31,6 @@
       "package": "aisdk:@ai-sdk/openai-compatible",
       "settings": {
         "baseURL": "http://host.docker.internal:1234/v1"
-      },
-      "models": {
-        "qwen/qwen3.5-9b": {
-          "name": "Qwen3.5 9B"
-        }
       }
     },
     "openrouter": {
@@ -64,6 +59,17 @@
       "options": {
         "baseURL": "https://opencode.ai/zen/v1"
       }
+    },
+    "provider1": {
+      "name": "provider1",
+      "package": "aisdk:@ai-sdk/openai-compatible",
+      "settings": {
+        "baseURL": "{env:PROVIDER1_BASE_URL}",
+        "apiKey": "{env:PROVIDER1_API_KEY}"
+      },
+      "models": {
+        "DeepSeek-V4-Flash": {"name": "DeepSeek-V4-Flash"}
+      }
     }
   },
   "mcp": {
@@ -90,8 +96,7 @@
         ],
         "environment": {
           "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:MCP_GITHUB_API_KEY}",
-          "GITHUB_TOOLSETS": "repos",
-          "GITHUB_READ_ONLY": "1"
+          "GITHUB_TOOLSETS": "all"
         }
       },
       "context7": {
@@ -99,7 +104,8 @@
         "url": "https://mcp.context7.com/mcp",
         "headers": {
           "Authorization": "Bearer {env:MCP_CONTEXT7_API_KEY}"
-        }
+        },
+        "disabled": true
       },
       "gitlab.com": {
         "type": "local",
@@ -131,12 +137,15 @@
         ],
         "disabled": true
       },
-      "pdf": {
+      "browse": {
         "type": "local",
         "command": [
-          "/root/.local/bin/uvx", "pdf-mcp"
+          "/root/.local/bin/browse",
+          "mcp"
         ],
-        "disabled": true
+        "environment": {
+          "OPENCODE_BROWSER_RUNTIME": "auto-update"
+        }
       }
     }
   }

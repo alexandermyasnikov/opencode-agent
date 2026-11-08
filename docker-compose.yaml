@@ -4,6 +4,7 @@ services:
       context: .
     ports:
       - "127.0.0.1:49374:49374"
+      - "127.0.0.1:19988:19988"
     env_file:
       - ~/.config/opencode/.env
     restart: unless-stopped

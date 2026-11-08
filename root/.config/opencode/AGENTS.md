@@ -6,6 +6,7 @@
 * Explain reasoning for architecture/design/debugging decisions.
 
 ## Tools
+* **Check `memory` (`search`) first for known issues/solutions** — with a `query` and `scope: "all-projects"` before debugging or investigating anything.
 * Use codebase-memory-mcp first for code analysis when relevant; fall back to other tools if unavailable or insufficient.
 * Prefer Context7 for library docs.
 * Check real-world examples via GitHub code search for unfamiliar APIs.

@@ -35,6 +35,7 @@ RUN update-ca-certificates
 RUN ln -s /usr/bin/bsdtar /usr/bin/tar -f   # fix tar: Cannot open: Function not implemented
 
 RUN curl -fsSL https://opencode.ai/v2/install | bash
+RUN curl -fsSL https://opencode.ai/browse/install | bash -s -- --remote
 
 RUN --mount=type=cache,target=/root/go/pkg/mod \
 	--mount=type=cache,target=/root/.cache/go-build \
@@ -58,3 +59,5 @@ RUN curl -fsSL "https://github.com/github/github-mcp-server/releases/latest/down
 
 RUN curl -fsSL "https://github.com/DeusData/codebase-memory-mcp/releases/latest/download/codebase-memory-mcp-linux-arm64-portable.tar.gz" \
 	| tar -xz -C /usr/local/bin codebase-memory-mcp
+
+RUN curl -fsSL https://raw.githubusercontent.com/Fission-AI/OpenSpec/main/scripts/binary/install.sh | sh
