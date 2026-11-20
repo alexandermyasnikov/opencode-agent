@@ -5,6 +5,7 @@
   "update": "notify",
   "lsp": true,
   "formatter": true,
+  "websearch": false,
   "experimental": {
     "todo": true
   },
