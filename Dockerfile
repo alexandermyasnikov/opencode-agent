@@ -47,7 +47,8 @@ RUN curl -fsSL https://bun.com/install | bash
 
 RUN --mount=type=cache,target=/root/.cache/uv \
 	curl -fsSL https://astral.sh/uv/install.sh | sh \
-	&& uv tool install git+https://github.com/oraios/serena
+	&& uv tool install git+https://github.com/oraios/serena \
+	&& uv tool install "graphifyy[all]" && graphify install --platform opencode
 
 RUN --mount=type=cache,target=/root/.npm \
 	npm install -g ssh-mcp \

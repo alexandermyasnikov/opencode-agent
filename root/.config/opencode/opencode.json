@@ -147,6 +147,14 @@
         "environment": {
           "OPENCODE_BROWSER_RUNTIME": "auto-update"
         }
+      },
+      "graphify": {
+        "type": "local",
+        "command": ["graphify-mcp", ".graphify-out/graph.json"],
+        "cwd": ".",
+        "environment": {
+          "GRAPHIFY_OUT": ".graphify-out"
+        }
       }
     }
   }
