@@ -187,7 +187,7 @@
   // Rough guide: tokens ≈ bytes / 4 for mixed code/prose.
   "autoCaptureMaxContextBytes": 131072,
   // Days to keep AI session history before cleanup
-  "aiSessionRetentionDays": 7,
+  "aiSessionRetentionDays": 14,
   // Temperature for AI API requests (set to false to omit parameter for models that don't support it)
   // Some reasoning models (like o1, o3, gpt-5) don't support temperature parameter
   // Set to false and add "memoryTemperature": false in config when using such models
@@ -230,7 +230,7 @@
   // - User patterns (recurring topics, problem domains, technical interests)
   // - User workflows (development habits, sequences, learning style)
   // - Skill level (overall and per-domain assessment)
-  "userProfileAnalysisInterval": 20,
+  "userProfileAnalysisInterval": 10,
   // Days before inactive items (all types) are eligible for removal
   "userProfileStaleDays": 14,
   // Number of preferences shown in UI
@@ -241,24 +241,24 @@
   "userProfileDisplayWorkflows": 10,
   // Number of preferences injected into LLM conversation context
   // Keep this small — the strongest signals are enough; more dilute LLM attention
-  "userProfileInjectPreferences": 5,
+  "userProfileInjectPreferences": 10,
   // Number of patterns injected into LLM conversation context
-  "userProfileInjectPatterns": 5,
+  "userProfileInjectPatterns": 10,
   // Number of workflows injected into LLM conversation context
-  "userProfileInjectWorkflows": 3,
+  "userProfileInjectWorkflows": 6,
   // Days before preference confidence starts to decay (if not reinforced)
   // Preferences that aren't seen again will gradually lose confidence and be removed
   "userProfileConfidenceDecayDays": 30,
   // Number of profile versions to keep in changelog (for rollback/debugging)
   // Older versions are automatically cleaned up
-  "userProfileChangelogRetentionCount": 5,
+  "userProfileChangelogRetentionCount": 10,
   // Minimum evidence count for a preference/pattern to survive confidence decay
   // Items confirmed fewer times are more likely to be pruned when confidence decays
   "userProfileMinEvidenceForRetention": 3,
   // Periodically merge duplicate or irrelevant profile items with the configured AI provider
   "userProfileAutoCleanupEnabled": true,
   // Number of analyzed user prompts between automatic AI cleanup runs
-  "userProfileAutoCleanupInterval": 100,
+  "userProfileAutoCleanupInterval": 1000,
   // Enable LLM validation of existing preferences against recent behavior.
   // When enabled, each analysis round checks if top-5 preferences still match recent prompts.
   // Experimental — disabled by default.
@@ -267,9 +267,9 @@
   // Search Settings
   // ============================================
   // Minimum similarity score (0-1) for memory search results
-  "similarityThreshold": 0.6,
+  "similarityThreshold": 0.75,
   // Maximum number of memories to return in search results
-  "maxMemories": 10,
+  "maxMemories": 30,
   // ============================================
   // Advanced Settings
   // ============================================
